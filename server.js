@@ -5,8 +5,8 @@ var sys = require("sys"),
     flickr = require("./flickrreader");
 
 var users = {
-    alina: "9724292",
-    timo: "64366387"
+    alina: "9724292@N06",
+    timo: "64366387@N08"
 };
 
 http.createServer(function(request, response) {  

@@ -5,7 +5,7 @@ var sys = require("sys"),
 
 exports.fetch = function (options) {
     var connection = http.createClient(80, "api.flickr.com"),
-        request = connection.request("GET", "/services/feeds/photos_public.gne?id=" + options.userId + "@N08&lang=en-us&format=rss_200", { host: "api.flickr.com" });
+        request = connection.request("GET", "/services/feeds/photos_public.gne?id=" + options.userId + "&lang=en-us&format=rss_200", { host: "api.flickr.com" });
 
     request.addListener("response", function (response) {
         var resp = "";
