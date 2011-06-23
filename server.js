@@ -47,7 +47,7 @@ http.createServer(function(request, response) {
             userId: userId,
             success: function (data) {
                 response.writeHead(200);
-                response.write(data);
+                response.write("var loaded_flickr_data = " + data + ";");
                 response.end();
             },
             error: function (err) {
