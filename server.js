@@ -4,12 +4,29 @@ var sys = require("sys"),
     fs = require("fs"),
     flickr = require("./flickrreader");
 
-var userId = "64366387";
+var users = {
+    alina: "9724292",
+    timo: "64366387"
+};
 
 http.createServer(function(request, response) {  
-    sys.puts("Got request: " + request.url);
+    var pageNotFound = function (msg) {
+        response.writeHead(404, "Page not found.");
+        response.write(msg);
+        response.end();
+    };
+    var path = request.url.split("/");
+    sys.puts("Got request: " + path.join(","));
 
-    if (request.url === "/update") {
+    if (path.length !== 3) {
+        pageNotFound("Wrong number of arguments");
+        return;
+    }
+
+    var userId = users[path[1]];
+    var method = path[2];
+
+    if (method === "update") {
         flickr.fetch({
             userId: userId,
             success: function (data) {
@@ -25,7 +42,7 @@ http.createServer(function(request, response) {
                 response.end();
             }
         });
-    } else if(request.url === "/read") {
+    } else if(method === "read") {
         flickr.read({
             userId: userId,
             success: function (data) {
@@ -39,8 +56,7 @@ http.createServer(function(request, response) {
             }
         });
     } else {
-        response.writeHead(404, "Page not found.");
-        response.end();
+        pageNotFound("Method not found.");
     }
 
 }).listen(80);  
